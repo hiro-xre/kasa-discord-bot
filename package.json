@@ -9,5 +9,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"nitropack": "latest"
+	},
+	"dependencies": {
+		"discord-interactions": "^4.3.0"
 	}
 }
