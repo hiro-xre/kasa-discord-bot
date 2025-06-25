@@ -8,6 +8,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"discord-api-types": "^0.38.13",
 		"nitropack": "latest"
 	},
 	"dependencies": {
