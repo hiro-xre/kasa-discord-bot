@@ -1,5 +1,10 @@
 import type { H3Event } from "h3";
 import { verifyKey } from "discord-interactions";
+import {
+	InteractionType,
+	type APIChatInputApplicationCommandInteraction,
+	type APIPingInteraction,
+} from "discord-api-types/v10";
 
 export const isVerified = async (
 	event: H3Event,
@@ -24,4 +29,12 @@ export const verifiedWebhookRequest = async (
 			statusMessage: "Invalid request signature",
 		});
 	}
+};
+
+export const isPingRequest = async (event: H3Event): Promise<boolean> => {
+	const body = await readBody<
+		APIPingInteraction | APIChatInputApplicationCommandInteraction
+	>(event);
+
+	return body.type === InteractionType.Ping;
 };
