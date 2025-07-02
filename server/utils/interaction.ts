@@ -38,3 +38,13 @@ export const isPingRequest = async (event: H3Event): Promise<boolean> => {
 
 	return body.type === InteractionType.Ping;
 };
+
+export const isApplicationCommand = async (
+	event: H3Event,
+): Promise<boolean> => {
+	const body = await readBody<
+		APIPingInteraction | APIChatInputApplicationCommandInteraction
+	>(event);
+
+	return body.type === InteractionType.ApplicationCommand;
+};

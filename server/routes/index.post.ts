@@ -1,4 +1,8 @@
-import { verifiedWebhookRequest, isPingRequest } from "~/utils/interaction";
+import {
+	verifiedWebhookRequest,
+	isPingRequest,
+	isApplicationCommand,
+} from "~/utils/interaction";
 
 export default defineEventHandler(async (event) => {
 	const publicKey = useRuntimeConfig().discordPublicKey;
@@ -9,5 +13,15 @@ export default defineEventHandler(async (event) => {
 		return { type: 1 };
 	}
 
-	return "Start by editing <code>server/routes/index.ts</code>.";
+	if (!(await isApplicationCommand(event))) {
+		throw createError({
+			status: 400,
+			statusMessage: "Invalid Request",
+		});
+	}
+
+	return {
+		type: 4,
+		data: { content: "Hello, World!" },
+	};
 });
