@@ -55,3 +55,32 @@ const calculateMaxRainChance = (rainChances: TimeSlotRainChance): number => {
 
 	return Math.max(...chances);
 };
+
+const RAIN_PROBABILITY_THRESHOLD = 20;
+
+export const isUmbrellaNeeded = async (maxChance: number): Promise<boolean> => {
+	try {
+		return maxChance >= RAIN_PROBABILITY_THRESHOLD;
+	} catch (error) {
+		console.log("傘の必要性の判定に失敗しました:", error);
+		throw new Error("傘の必要性の判定に失敗しました");
+	}
+};
+
+export const getUmbrellaMessage = async (): Promise<string> => {
+	try {
+		const rainChances = await getTodayRainChance();
+		const maxChance = calculateMaxRainChance(rainChances);
+		const isNeeded = isUmbrellaNeeded(maxChance);
+
+		if (isNeeded) {
+			return `☔️傘を持って行こう！
+      - 本日の最高降水確率: ${maxChance}%`;
+		}
+		return `✅傘は不要かな！
+    - 本日の最高降水確率: ${maxChance}%`;
+	} catch (error) {
+		console.log("メッセージの生成に失敗しました:", error);
+		throw new Error("メッセージの生成に失敗しました");
+	}
+};

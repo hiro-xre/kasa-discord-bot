@@ -3,6 +3,7 @@ import {
 	isPingRequest,
 	isApplicationCommand,
 } from "~/utils/interaction";
+import { getUmbrellaMessage } from "~/utils/weather";
 
 export default defineEventHandler(async (event) => {
 	const publicKey = useRuntimeConfig().discordPublicKey;
@@ -20,8 +21,10 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
+	const message = await getUmbrellaMessage();
+
 	return {
 		type: 4,
-		data: { content: "Hello, World!" },
+		data: { content: message },
 	};
 });
